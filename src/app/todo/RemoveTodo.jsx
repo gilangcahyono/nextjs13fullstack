@@ -4,7 +4,7 @@ export default function RemoveTodo({todo}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleRemove = (id) => {
-    fetch(`/api/todo/${id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/todo/${id}`, {
       method: 'DELETE',
     });
     setIsOpen(false);

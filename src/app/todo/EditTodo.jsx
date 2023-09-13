@@ -7,7 +7,7 @@ export default function EditTodo({todo}) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`/api/todo/${todo.id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/todo/${todo.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         task: task,

@@ -7,7 +7,7 @@ export default function AddTodo() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch('/api/todo', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/todo`, {
       method: 'POST',
       body: JSON.stringify({
         task: task,
