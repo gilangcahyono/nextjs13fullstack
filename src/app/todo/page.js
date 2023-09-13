@@ -9,7 +9,7 @@ export default function Todo() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/todo`)
+    fetch('/api/todo')
       .then((res) => res.json())
       .then((data) => setTodos(data));
   }, [todos]);
