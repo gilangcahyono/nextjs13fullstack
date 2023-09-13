@@ -2,6 +2,8 @@
 
 import {useEffect, useState} from 'react';
 import AddTodo from './AddTodo';
+import RemoveTodo from './RemoveTodo';
+import EditTodo from './EditTodo';
 
 export default function Todo() {
   const [todos, setTodos] = useState([]);
@@ -11,14 +13,14 @@ export default function Todo() {
       .then((res) => res.json())
       .then((data) => setTodos(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [todos]);
 
   return (
     <>
       <AddTodo />
       <div className="overflow-x-auto">
         <table className="table">
-          <thead>
+          <thead className="text-lg">
             <tr>
               <th>No</th>
               <th>Name</th>
@@ -38,12 +40,8 @@ export default function Todo() {
                   <th>{idx + 1}</th>
                   <td>{todo.task}</td>
                   <td className="flex gap-2">
-                    <button type="button" className="btn btn-info btn-sm">
-                      Edit
-                    </button>
-                    <button type="button" className="btn btn-error btn-sm">
-                      Delete
-                    </button>
+                    <EditTodo todo={todo} />
+                    <RemoveTodo todo={todo} />
                   </td>
                 </tr>
               ))

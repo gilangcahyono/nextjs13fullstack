@@ -1,14 +1,14 @@
 import {useState} from 'react';
 
-export default function AddTodo() {
-  const [task, setTask] = useState('');
+export default function EditTodo({todo}) {
+  const [task, setTask] = useState(todo.task);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch('/api/todo', {
-      method: 'POST',
+    fetch(`/api/todo/${todo.id}`, {
+      method: 'PATCH',
       body: JSON.stringify({
         task: task,
       }),
@@ -19,12 +19,15 @@ export default function AddTodo() {
 
   return (
     <>
-      <button className="btn btn-primary" onClick={() => setIsOpen(!isOpen)}>
-        Add new Task
+      <button
+        className="btn btn-warning btn-sm"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        Edit
       </button>
       <dialog className={isOpen ? 'modal modal-open' : 'modal'}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Todo</h3>
+          <h3 className="font-bold text-lg">Edit {todo.task}</h3>
           <form className="py-2" onSubmit={handleSubmit}>
             <input
               autoFocus
@@ -39,7 +42,7 @@ export default function AddTodo() {
             <div className="modal-action">
               <div className="flex gap-3">
                 <button type="submit" className="btn btn-primary">
-                  Add
+                  Save
                 </button>
                 <button
                   type="button"
