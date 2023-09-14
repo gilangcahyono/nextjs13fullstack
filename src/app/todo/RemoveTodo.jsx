@@ -1,18 +1,15 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 
 export default function RemoveTodo({todo}) {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
 
   const handleRemove = (id) => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/todo/${id}`, {
       method: 'DELETE',
     });
     setIsOpen(false);
-    router.refresh();
   };
 
   return (
