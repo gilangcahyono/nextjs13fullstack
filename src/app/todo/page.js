@@ -1,18 +1,15 @@
-'use client';
-
-import {useEffect, useState} from 'react';
 import AddTodo from './AddTodo';
 import RemoveTodo from './RemoveTodo';
 import EditTodo from './EditTodo';
+import prisma from '@/lib/prisma';
 
-export default function Todo() {
-  const [todos, setTodos] = useState([]);
+const getTodos = async () => {
+  const res = await prisma.todo.findMany();
+  return res;
+};
 
-  useEffect(() => {
-    fetch('/api/todo')
-      .then((res) => res.json())
-      .then((data) => setTodos(data));
-  }, [todos]);
+export default async function Todo() {
+  const todos = await getTodos();
 
   return (
     <>
@@ -27,24 +24,16 @@ export default function Todo() {
             </tr>
           </thead>
           <tbody>
-            {todos.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="text-center p-3">
-                  <span className="loading loading-spinner loading-lg"></span>
+            {todos.map((todo, idx) => (
+              <tr className="hover" key={todo.id}>
+                <th>{idx + 1}</th>
+                <td>{todo.task}</td>
+                <td className="flex gap-2">
+                  <EditTodo todo={todo} />
+                  <RemoveTodo todo={todo} />
                 </td>
               </tr>
-            ) : (
-              todos.map((todo, idx) => (
-                <tr className="hover" key={todo.id}>
-                  <th>{idx + 1}</th>
-                  <td>{todo.task}</td>
-                  <td className="flex gap-2">
-                    <EditTodo todo={todo} />
-                    <RemoveTodo todo={todo} />
-                  </td>
-                </tr>
-              ))
-            )}
+            ))}
           </tbody>
         </table>
       </div>

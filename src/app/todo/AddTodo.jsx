@@ -1,8 +1,12 @@
+'use client';
+
+import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 
 export default function AddTodo() {
   const [task, setTask] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,8 +17,10 @@ export default function AddTodo() {
         task: task,
       }),
     });
+
     setIsOpen(false);
     setTask('');
+    router.refresh();
   };
 
   return (
